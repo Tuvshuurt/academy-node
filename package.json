@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Enkhtuvshin0513/academy-backend-/issues"
   },
-  "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme"
+  "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "inquirer": "^12.10.0"
+  }
 }
