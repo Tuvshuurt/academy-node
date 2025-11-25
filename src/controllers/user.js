@@ -1,17 +1,16 @@
-import e from "express";
-
 export const login = (req, res) => {
-  const email =req.body.email
-  const password =req.body.password
+const {email,password}=req.body
+  res.cookie("user", "userId123", {
+    httpOnly: true,
+    secure: false
+  });
+  res.json({
+    user: "userId123"
+  });
+};
 
+export const logout = (req, res) => {
+  res.clearCookie("user");
 
-  // if(email  && password){
-
-  // res.send("Success");
-
-  // }else{
-  //     res.send("asdasdasd");
-
-  // }
-
+  res.send("Success!");
 };
