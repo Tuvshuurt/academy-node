@@ -1,40 +1,57 @@
+import {
+  createUserService,
+  updateUserService,
+  getUsersService,
+  getUserByIdService,
+  deleteUserService,
+  getUserAccountsService,
+  getUserTransactionsService,
+} from "../services/user.js";
 
-const getUsers = async () => {
-  const userRawData = await fs.readFile("users.json", "utf-8");
-
-  const users = JSON.parse(userRawData);
-
-  return users;
-};
-export const login = async (req, res) => {
-const {email,password}=req.body
-
-
-  const users =    [{ "email": "admin@gmail.com", "password": "123", "balance": 4000 }];
-
- const user = users.find(value => {
-    return value.email === email && value.password === password;
-  });
-
-  if (!user) {
-    
-        res.send(
-            "email eswel password buruu bn!"
-    )
-  } else {
-    res.cookie("user", email, {
-        httpOnly: true,
-        secure: false
-    });
-    res.json({
-        user: email
-    });
-  }
+export const createUser = async (req, res) => {
  
+  const { username, email, password ,balance,firstname,lastname} = req.body;
+
+  const user = await createUserService(username, email, password,balance,firstname,lastname);
+
+  res.json(user);
 };
 
-export const logout = (req, res) => {
-  res.clearCookie("user");
+export const updateUser = async (req, res) => {
+  const { id, username, email, password, firstname, lastname } = req.body;
 
-  res.send("Success!");
+  const user = await updateUserService(
+    id,
+    username,
+    email,
+    password,
+    firstname,
+    lastname,
+  ); 
+
+  res.json(user);
 };
+
+export const getUsers = async (req, res) => {
+  const users = await getUsersService();
+  res.json(users);
+};
+
+export const getUserById = async (req, res) => {
+  const { id } = req.query;
+  const user = await getUserByIdService(id);
+  res.json(user);
+};
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.query;
+  const user = await deleteUserService(id);
+  res.json(user);
+};
+
+export const getUserAccounts = async (req, res) => {
+  const { id } = req.query;
+  const accounts = await getUserAccountsService(id);
+  res.json(accounts);
+};
+
